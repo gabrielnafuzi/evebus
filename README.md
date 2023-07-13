@@ -2,6 +2,11 @@
 
 Evebus is a lightweight, flexible event bus library designed to facilitate communication between components or services in JavaScript applications. With TypeScript support and a simple-to-use API.
 
+<a href="https://www.npmjs.org/package/evebus"><img src="https://img.shields.io/npm/v/evebus.svg" alt="npm"></a>
+<img src="https://github.com/gabrielnafuzi/evebus/workflows/CI/badge.svg" alt="build status">
+<a href="https://unpkg.com/evebus/dist/evebus.js"><img src="https://img.badgesize.io/https://unpkg.com/evebus/dist/evebus.cjs.production.min.js?compression=gzip&label=gzip" alt="gzip size"></a>
+<img src="https://img.shields.io/github/languages/top/gabrielnafuzi/evebus" alt="GitHub top language" />
+
 ## Features
 
 - **Easy to use API**: evebus offers straightforward functions to manage event listeners and dispatch events.
