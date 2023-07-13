@@ -1,5 +1,6 @@
-import { evebus, EventBus } from '../src'
 import { expect, test, describe, vi, beforeEach } from 'vitest'
+
+import { evebus, type EventBus } from '../src'
 
 describe('eventbus', () => {
   const eventKeyAsSymbol = Symbol('event1')
@@ -111,6 +112,7 @@ describe('eventbus', () => {
 
   test("call onError when it's provided", () => {
     const mockErrorHandler = vi.fn()
+
     const mockHandler = vi.fn(() => {
       throw new Error('test error')
     })

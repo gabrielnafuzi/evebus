@@ -63,6 +63,7 @@ export function evebus<Events extends Record<EventKey, unknown>>(
   ): void => {
     if (!key) {
       bus.clear()
+
       return
     }
 
@@ -106,6 +107,7 @@ export function evebus<Events extends Record<EventKey, unknown>>(
 
     if (handlers) {
       const handlersCopy = [...handlers]
+
       handlersCopy.forEach((handler) => {
         try {
           handler(payload!)

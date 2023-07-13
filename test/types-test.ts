@@ -1,4 +1,6 @@
-import { eventbus } from '../src'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { evebus } from '../src'
 
 interface PlayerEvent {
   player: string
@@ -8,7 +10,7 @@ interface ScoreEvent {
   score: number
 }
 
-const bus = eventbus<{
+const bus = evebus<{
   levelUp: string
   lifeLost?: number
   playerEvent: PlayerEvent
@@ -23,6 +25,7 @@ const lifeLostHandler = (x?: number) => {}
 const playerEventHandler = (x: PlayerEvent) => {}
 // @ts-ignore - ignore unused vars
 const scoreEventHandler = (x: ScoreEvent) => {}
+
 const wildcardHandler = (
   _type: 'levelUp' | 'lifeLost' | 'playerEvent' | 'scoreEvent',
   _event: string | PlayerEvent | ScoreEvent | number | undefined,
