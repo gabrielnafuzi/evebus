@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -7,7 +7,13 @@
     "dist",
     "src"
   ],
-  "keywords": ["eventbus", "event", "eventemitter", "emitter", "bus"],
+  "keywords": [
+    "eventbus",
+    "event",
+    "eventemitter",
+    "emitter",
+    "bus"
+  ],
   "engines": {
     "node": ">=10"
   },
