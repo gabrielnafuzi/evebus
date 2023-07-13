@@ -1,0 +1,55 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "vitest run && pnpm run test-types",
+    "test:watch": "vitest",
+    "test-types": "tsc -p tsconfig.test.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "release": "pnpm build && pnpm test && pnpm size && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && pnpm publish"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "name": "evebus",
+  "author": "Gabriel Moraes <gabriel.henmoraes@gmail.com>",
+  "homepage": "https://github.com/gabrielnafuzi/evebus",
+  "module": "dist/evebus.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/evebus.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/evebus.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.2.6",
+    "husky": "^8.0.3",
+    "prettier": "^3.0.0",
+    "size-limit": "^8.2.6",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.6.0",
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0"
+  }
+}
