@@ -22,14 +22,13 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts-resolve --minify --sourcemap",
+    "build": "tsup src/index.ts --format cjs,esm --dts-resolve --minify --clean --sourcemap",
     "test": "vitest run && pnpm run test-types",
     "test:watch": "vitest",
     "test-types": "tsc -p tsconfig.test.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ext .ts src/ test/",
-    "clean": "rimraf dist/",
-    "release": "pnpm clean && pnpm build && pnpm test && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && pnpm publish"
+    "release": "pnpm build && pnpm test && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && pnpm publish"
   },
   "name": "evebus",
   "author": "Gabriel Moraes <gabriel.henmoraes@gmail.com>",
@@ -43,7 +42,6 @@
     "eslint-plugin-import-helpers": "^1.3.1",
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.0",
-    "rimraf": "^5.0.1",
     "tsup": "^7.1.0",
     "typescript": "^5.1.6",
     "vitest": "^0.33.0"
