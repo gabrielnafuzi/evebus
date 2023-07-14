@@ -159,10 +159,13 @@ export function evebus<Events extends Record<EventKey, unknown>>(
   ): void => {
     const handlers = bus.get(key) as EventHandlerList<Events[Key]>
     const wildcardHandlers = bus.get('*') as WildcardEventHandlerList<Events>
-    const wildcardHandlersCopy = [...(wildcardHandlers ?? [])]
+
+    const wildcardHandlersCopy = wildcardHandlers
+      ? Array.from(wildcardHandlers)
+      : []
 
     if (handlers) {
-      const handlersCopy = [...handlers]
+      const handlersCopy = Array.from(handlers)
 
       handlersCopy.forEach((handler) => {
         try {
