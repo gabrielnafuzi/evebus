@@ -114,6 +114,36 @@ bus.once('some-event', (data) => {
 })
 ```
 
+#### Configuration Options
+
+When creating an event bus using `evebus`, you can pass an optional configuration object with the following options:
+
+- `initialEvents`: An `EventHandlerMap` containing the initial events and their corresponding event handlers. This allows you to set up predefined events when creating the event bus. By default, if no initial events are provided, the event bus will start with an empty set of events. Example usage:
+
+  ```ts
+  import { evebus } from 'evebus'
+
+  const initialEvents = new Map([
+    ['some-event', new Set([handler1, handler2])],
+    ['another-event', new Set([handler3])],
+  ])
+
+  const bus = evebus({ initialEvents })
+  ```
+
+- `onError`: A function that will be called when an error occurs in any event handler. This allows you to provide a centralized error handling mechanism for your event bus. Example usage:
+
+  ```ts
+  import { evebus } from 'evebus'
+
+  const bus = evebus({
+    onError: (error) => {
+      // Handle the error
+      console.error(error)
+    },
+  })
+  ```
+
 ### TypeScript Support
 
 evebus has robust TypeScript support. Define your event keys and payloads to take advantage of this:
