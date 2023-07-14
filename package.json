@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -22,7 +22,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts-resolve",
+    "build": "tsup src/index.ts --format cjs,esm --dts-resolve --minify --sourcemap",
     "test": "vitest run && pnpm run test-types",
     "test:watch": "vitest",
     "test-types": "tsc -p tsconfig.test.json",
