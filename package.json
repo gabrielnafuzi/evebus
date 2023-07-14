@@ -1,5 +1,5 @@
 {
-  "version": "0.1.6",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -28,7 +28,7 @@
     "test-types": "tsc -p tsconfig.test.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ext .ts src/ test/",
-    "release": "pnpm build && pnpm test && pnpm size && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && pnpm publish"
+    "release": "pnpm build && pnpm test && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && pnpm publish"
   },
   "name": "evebus",
   "author": "Gabriel Moraes <gabriel.henmoraes@gmail.com>",
