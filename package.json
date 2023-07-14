@@ -37,7 +37,8 @@
   },
   "name": "evebus",
   "author": "Gabriel Moraes <gabriel.henmoraes@gmail.com>",
-  "homepage": "https://github.com/gabrielnafuzi/evebus",
+  "repository": "gabrielnafuzi/evebus",
+  "homepage": "https://github.com/gabrielnafuzi/evebus#readme",
   "module": "dist/evebus.esm.js",
   "size-limit": [
     {
