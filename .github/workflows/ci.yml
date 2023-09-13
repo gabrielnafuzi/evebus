@@ -15,26 +15,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: latest
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'pnpm'
+      - uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: bun install
 
       - name: Linting
-        run: pnpm lint
+        run: bun run lint
 
       - name: Typecheck
-        run: pnpm typecheck
+        run: bun run typecheck
 
       - name: Test
-        run: pnpm test
+        run: bun test
 
       - name: Build
-        run: pnpm build
+        run: bun run build

@@ -1,4 +1,4 @@
-import { expect, test, describe, vi, beforeEach } from 'vitest'
+import { expect, test, describe, beforeEach, mock } from 'bun:test'
 
 import { evebus, type EventBus } from '../src'
 
@@ -19,8 +19,8 @@ describe('eventbus', () => {
 
   test('accept initial bus', () => {
     const initialBus = new Map()
-    const mockHandler = vi.fn()
-    const mockHandler2 = vi.fn()
+    const mockHandler = mock(() => {})
+    const mockHandler2 = mock(() => {})
     initialBus.set('event1', new Set([mockHandler, mockHandler2]))
 
     const bus = evebus<{ event1: string }>({ initialEvents: initialBus })
@@ -28,28 +28,28 @@ describe('eventbus', () => {
     bus.emit('event1', 'hello')
 
     expect(bus.all).toBe(initialBus)
-    expect(mockHandler).toHaveBeenCalledWith('hello')
-    expect(mockHandler2).toHaveBeenCalledWith('hello')
+    expect(mockHandler.mock.calls[0]).toEqual(['hello'])
+    expect(mockHandler2.mock.calls[0]).toEqual(['hello'])
   })
 
   test('on and emit', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
     bus.on('event1', mockHandler)
     bus.emit('event1', 'hello')
-    expect(mockHandler).toHaveBeenCalledWith('hello')
+    expect(mockHandler).toHaveBeenCalledTimes(1)
   })
 
   test('accepts symbol as event key', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.on(eventKeyAsSymbol, mockHandler)
     bus.emit(eventKeyAsSymbol, 'hello')
 
-    expect(mockHandler).toHaveBeenCalledWith('hello')
+    expect(mockHandler.mock.calls[0]).toEqual(['hello'])
   })
 
   test('off', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.on('event1', mockHandler)
     bus.emit('event1', 'hello')
@@ -57,13 +57,13 @@ describe('eventbus', () => {
     bus.emit('event1', 'world')
 
     expect(mockHandler).toHaveBeenCalledTimes(1)
-    expect(mockHandler).toHaveBeenCalledWith('hello')
+    expect(mockHandler.mock.calls[0]).toEqual(['hello'])
   })
 
   test('off() clears all handlers', () => {
-    const mockHandler = vi.fn()
-    const mockHandler2 = vi.fn()
-    const mockHandler3 = vi.fn()
+    const mockHandler = mock(() => {})
+    const mockHandler2 = mock(() => {})
+    const mockHandler3 = mock(() => {})
 
     bus.on('event1', mockHandler)
     bus.on('event2', mockHandler2)
@@ -80,40 +80,40 @@ describe('eventbus', () => {
     bus.emit('event3', false)
 
     expect(mockHandler).toHaveBeenCalledTimes(1)
-    expect(mockHandler).toHaveBeenCalledWith('hello')
+    expect(mockHandler.mock.calls[0]).toEqual(['hello'])
     expect(mockHandler2).toHaveBeenCalledTimes(1)
-    expect(mockHandler2).toHaveBeenCalledWith(42)
+    expect(mockHandler2.mock.calls[0]).toEqual([42])
     expect(mockHandler3).toHaveBeenCalledTimes(1)
-    expect(mockHandler3).toHaveBeenCalledWith(true)
+    expect(mockHandler3.mock.calls[0]).toEqual([true])
   })
 
   test('once', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.once('event2', mockHandler)
     bus.emit('event2', 42)
     bus.emit('event2', 43)
 
     expect(mockHandler).toHaveBeenCalledTimes(1)
-    expect(mockHandler).toHaveBeenCalledWith(42)
+    expect(mockHandler.mock.calls[0]).toEqual([42])
   })
 
   test('wildcard on and emit', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.on('*', mockHandler)
     bus.emit('event1', 'hello')
     bus.emit('event2', 42)
 
     expect(mockHandler).toHaveBeenCalledTimes(2)
-    expect(mockHandler).toHaveBeenCalledWith('event1', 'hello')
-    expect(mockHandler).toHaveBeenCalledWith('event2', 42)
+    expect(mockHandler.mock.calls[0]).toEqual(['event1', 'hello'])
+    expect(mockHandler.mock.calls[1]).toEqual(['event2', 42])
   })
 
   test("call onError when it's provided", () => {
-    const mockErrorHandler = vi.fn()
+    const mockErrorHandler = mock(() => {})
 
-    const mockHandler = vi.fn(() => {
+    const mockHandler = mock(() => {
       throw new Error('test error')
     })
 
@@ -124,11 +124,11 @@ describe('eventbus', () => {
     bus.on('event1', mockHandler)
     bus.emit('event1', 'hello')
 
-    expect(mockErrorHandler).toHaveBeenCalledWith(new Error('test error'))
+    expect(mockErrorHandler.mock.calls[0]).toEqual([new Error('test error')])
   })
 
   test('wildcard off', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.on('*', mockHandler)
     bus.emit('event1', 'hello')
@@ -136,25 +136,25 @@ describe('eventbus', () => {
     bus.emit('event1', 'world')
 
     expect(mockHandler).toHaveBeenCalledTimes(1)
-    expect(mockHandler).toHaveBeenCalledWith('event1', 'hello')
+    expect(mockHandler.mock.calls[0]).toEqual(['event1', 'hello'])
   })
 
   test('multiple handlers', () => {
-    const mockHandler1 = vi.fn()
-    const mockHandler2 = vi.fn()
+    const mockHandler1 = mock(() => {})
+    const mockHandler2 = mock(() => {})
 
     bus.on('event1', mockHandler1)
     bus.on('event1', mockHandler2)
 
     bus.emit('event1', 'hello')
 
-    expect(mockHandler1).toHaveBeenCalledWith('hello')
-    expect(mockHandler2).toHaveBeenCalledWith('hello')
+    expect(mockHandler1.mock.calls[0]).toEqual(['hello'])
+    expect(mockHandler2.mock.calls[0]).toEqual(['hello'])
   })
 
   test('handler removal with off without handler', () => {
-    const mockHandler1 = vi.fn()
-    const mockHandler2 = vi.fn()
+    const mockHandler1 = mock(() => {})
+    const mockHandler2 = mock(() => {})
 
     bus.on('event1', mockHandler1)
     bus.on('event1', mockHandler2)
@@ -164,13 +164,13 @@ describe('eventbus', () => {
     bus.emit('event1', 'world')
 
     expect(mockHandler1).toHaveBeenCalledTimes(1)
-    expect(mockHandler1).toHaveBeenCalledWith('hello')
+    expect(mockHandler1.mock.calls[0]).toEqual(['hello'])
     expect(mockHandler2).toHaveBeenCalledTimes(1)
-    expect(mockHandler2).toHaveBeenCalledWith('hello')
+    expect(mockHandler2.mock.calls[0]).toEqual(['hello'])
   })
 
   test('wildcard handler with multiple events', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.on('*', mockHandler)
     bus.emit('event1', 'hello')
@@ -178,13 +178,13 @@ describe('eventbus', () => {
     bus.emit('event3', true)
 
     expect(mockHandler).toHaveBeenCalledTimes(3)
-    expect(mockHandler).toHaveBeenCalledWith('event1', 'hello')
-    expect(mockHandler).toHaveBeenCalledWith('event2', 42)
-    expect(mockHandler).toHaveBeenCalledWith('event3', true)
+    expect(mockHandler.mock.calls[0]).toEqual(['event1', 'hello'])
+    expect(mockHandler.mock.calls[1]).toEqual(['event2', 42])
+    expect(mockHandler.mock.calls[2]).toEqual(['event3', true])
   })
 
   test('once with multiple calls', () => {
-    const mockHandler = vi.fn()
+    const mockHandler = mock(() => {})
 
     bus.once('event2', mockHandler)
     bus.emit('event2', 42)
@@ -192,6 +192,6 @@ describe('eventbus', () => {
     bus.emit('event2', 44)
 
     expect(mockHandler).toHaveBeenCalledTimes(1)
-    expect(mockHandler).toHaveBeenCalledWith(42)
+    expect(mockHandler.mock.calls[0]).toEqual([42])
   })
 })

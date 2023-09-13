@@ -15,7 +15,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["bun-types"]
   },
-  "include": ["src/**/*", ".eslintrc.js"]
+  "include": ["src/**/*", ".eslintrc.js", "test/index.spec.ts"]
 }
