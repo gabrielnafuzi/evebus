@@ -18,7 +18,7 @@ Evebus is a lightweight, flexible event bus library designed to facilitate commu
 
 ## Install
 
-To install the evebus library, you can use npm, yarn, or pnpm:
+To install the evebus library, you can use npm, yarn, pnpm, or bun:
 
 ```bash
 npm install evebus
