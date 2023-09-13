@@ -1,3 +1,5 @@
+/// <reference lib="ESNext" />
+
 export type EventKey = string | symbol
 export type EventHandler<T = unknown> = (event: T) => void
 export type WildcardEventHandler<Events = Record<string, unknown>> = (
